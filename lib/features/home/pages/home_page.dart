@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:monble/core/constants/app_colors.dart';
 import 'package:monble/core/constants/app_text_styles.dart';
-import 'package:monble/core/utils/navigate.dart';
-import 'package:monble/features/transaction/pages/transaction_stats_page.dart';
+import 'package:monble/core/navigation/routes.dart';
 import 'package:monble/features/transaction/widgets/transaction_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,16 +20,17 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(50),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                spreadRadius: 5,
-                offset: Offset(1, 1),
-              ),
-            ]),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(50),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              spreadRadius: 5,
+              offset: Offset(1, 1),
+            ),
+          ],
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigate.to(const TransactionStatsPage(), context);
+              context.push(AppRoutes.statisticsPage);
             },
             icon: const Icon(Icons.bar_chart),
           )
@@ -131,8 +132,7 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           children: [
                             ListView.separated(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               shrinkWrap: true,
                               itemBuilder: (_, index) {
                                 return const TransactionItem();
