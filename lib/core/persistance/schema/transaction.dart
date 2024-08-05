@@ -1,8 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:monble/core/persistance/schema/base/model.dart';
-import 'package:monble/core/persistance/schema/project.dart';
-import 'package:monble/core/persistance/schema/transaction_category.dart';
-import 'package:monble/core/persistance/schema/transaction_type.dart';
+import 'package:monble/core/persistance/schema/schema.dart';
 
 part 'transaction.g.dart';
 
@@ -21,8 +18,6 @@ class Transaction extends Model {
 
   final IsarLink<TransactionCategory> category;
 
-  final IsarLink<Project> project;
-
   Transaction({
     required this.date,
     this.label = "",
@@ -30,8 +25,6 @@ class Transaction extends Model {
     this.amount = 0,
     this.type = TransactionType.expense,
     TransactionCategory? category,
-    Project? project,
   })  : category = IsarLink()..value = category,
-        project = IsarLink()..value = project,
         super();
 }

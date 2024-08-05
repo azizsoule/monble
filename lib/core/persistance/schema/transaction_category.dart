@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:monble/core/persistance/schema/base/model.dart';
+import 'package:monble/core/persistance/schema/schema.dart';
 
 part 'transaction_category.g.dart';
 
@@ -11,12 +11,12 @@ class TransactionCategory extends Model {
 
   final String description;
 
-  final double budget;
+  final double limit;
 
   TransactionCategory({
     this.label = "",
     this.description = "",
     this.icon = "💰",
-    this.budget = 0,
+    this.limit = 0,
   }) : super();
 }

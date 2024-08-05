@@ -1,29 +1,33 @@
 import 'package:isar/isar.dart';
 import 'package:monble/core/persistance/schema/schema.dart';
 
-part 'project.g.dart';
+part 'budget.g.dart';
 
 @collection
-class Project extends Model {
+class Budget extends Model {
   final String label;
 
   final String description;
+
+  final double amount;
 
   final DateTime startDate;
 
   final DateTime endDate;
 
-  final double targetAmount;
-
   final IsarLinks<Transaction> transactions;
 
-  Project({
+  final IsarLinks<TransactionCategory> transactionsCategories;
+
+  Budget({
     required this.startDate,
     required this.endDate,
     this.label = "",
     this.description = "",
-    this.targetAmount = 0,
+    this.amount = 0,
     List<Transaction> transactions = const [],
+    List<TransactionCategory> transactionsCategories = const [],
   })  : transactions = IsarLinks()..addAll(transactions),
+        transactionsCategories = IsarLinks()..addAll(transactionsCategories),
         super();
 }

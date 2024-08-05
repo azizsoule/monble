@@ -3,6 +3,7 @@ import 'package:monble/core/persistance/schema/schema.dart';
 import 'package:path_provider/path_provider.dart';
 
 const _schemas = [
+  BudgetSchema,
   IncomeSourceSchema,
   ProjectSchema,
   TransactionSchema,

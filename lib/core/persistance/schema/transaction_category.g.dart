@@ -18,30 +18,30 @@ const TransactionCategorySchema = CollectionSchema(
   name: r'TransactionCategory',
   id: -3276018964472478727,
   properties: {
-    r'budget': PropertySchema(
-      id: 0,
-      name: r'budget',
-      type: IsarType.double,
-    ),
     r'createdAt': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
     r'description': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'description',
       type: IsarType.string,
     ),
     r'icon': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'icon',
       type: IsarType.string,
     ),
     r'label': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'label',
       type: IsarType.string,
+    ),
+    r'limit': PropertySchema(
+      id: 4,
+      name: r'limit',
+      type: IsarType.double,
     )
   },
   estimateSize: _transactionCategoryEstimateSize,
@@ -76,11 +76,11 @@ void _transactionCategorySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDouble(offsets[0], object.budget);
-  writer.writeDateTime(offsets[1], object.createdAt);
-  writer.writeString(offsets[2], object.description);
-  writer.writeString(offsets[3], object.icon);
-  writer.writeString(offsets[4], object.label);
+  writer.writeDateTime(offsets[0], object.createdAt);
+  writer.writeString(offsets[1], object.description);
+  writer.writeString(offsets[2], object.icon);
+  writer.writeString(offsets[3], object.label);
+  writer.writeDouble(offsets[4], object.limit);
 }
 
 TransactionCategory _transactionCategoryDeserialize(
@@ -90,10 +90,10 @@ TransactionCategory _transactionCategoryDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TransactionCategory(
-    budget: reader.readDoubleOrNull(offsets[0]) ?? 0,
-    description: reader.readStringOrNull(offsets[2]) ?? "",
-    icon: reader.readStringOrNull(offsets[3]) ?? "💰",
-    label: reader.readStringOrNull(offsets[4]) ?? "",
+    description: reader.readStringOrNull(offsets[1]) ?? "",
+    icon: reader.readStringOrNull(offsets[2]) ?? "💰",
+    label: reader.readStringOrNull(offsets[3]) ?? "",
+    limit: reader.readDoubleOrNull(offsets[4]) ?? 0,
   );
   return object;
 }
@@ -106,15 +106,15 @@ P _transactionCategoryDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDoubleOrNull(offset) ?? 0) as P;
-    case 1:
       return (reader.readDateTime(offset)) as P;
+    case 1:
+      return (reader.readStringOrNull(offset) ?? "") as P;
     case 2:
-      return (reader.readStringOrNull(offset) ?? "") as P;
-    case 3:
       return (reader.readStringOrNull(offset) ?? "💰") as P;
-    case 4:
+    case 3:
       return (reader.readStringOrNull(offset) ?? "") as P;
+    case 4:
+      return (reader.readDoubleOrNull(offset) ?? 0) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -214,72 +214,6 @@ extension TransactionCategoryQueryWhere
 
 extension TransactionCategoryQueryFilter on QueryBuilder<TransactionCategory,
     TransactionCategory, QFilterCondition> {
-  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
-      budgetEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'budget',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
-      budgetGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'budget',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
-      budgetLessThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'budget',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
-      budgetBetween(
-    double lower,
-    double upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'budget',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
   QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
       createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -799,6 +733,72 @@ extension TransactionCategoryQueryFilter on QueryBuilder<TransactionCategory,
       ));
     });
   }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      limitEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'limit',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      limitGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'limit',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      limitLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'limit',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      limitBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'limit',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
 }
 
 extension TransactionCategoryQueryObject on QueryBuilder<TransactionCategory,
@@ -809,20 +809,6 @@ extension TransactionCategoryQueryLinks on QueryBuilder<TransactionCategory,
 
 extension TransactionCategoryQuerySortBy
     on QueryBuilder<TransactionCategory, TransactionCategory, QSortBy> {
-  QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
-      sortByBudget() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'budget', Sort.asc);
-    });
-  }
-
-  QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
-      sortByBudgetDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'budget', Sort.desc);
-    });
-  }
-
   QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
       sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
@@ -878,24 +864,24 @@ extension TransactionCategoryQuerySortBy
       return query.addSortBy(r'label', Sort.desc);
     });
   }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
+      sortByLimit() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'limit', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
+      sortByLimitDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'limit', Sort.desc);
+    });
+  }
 }
 
 extension TransactionCategoryQuerySortThenBy
     on QueryBuilder<TransactionCategory, TransactionCategory, QSortThenBy> {
-  QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
-      thenByBudget() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'budget', Sort.asc);
-    });
-  }
-
-  QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
-      thenByBudgetDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'budget', Sort.desc);
-    });
-  }
-
   QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
       thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
@@ -965,17 +951,24 @@ extension TransactionCategoryQuerySortThenBy
       return query.addSortBy(r'label', Sort.desc);
     });
   }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
+      thenByLimit() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'limit', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterSortBy>
+      thenByLimitDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'limit', Sort.desc);
+    });
+  }
 }
 
 extension TransactionCategoryQueryWhereDistinct
     on QueryBuilder<TransactionCategory, TransactionCategory, QDistinct> {
-  QueryBuilder<TransactionCategory, TransactionCategory, QDistinct>
-      distinctByBudget() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'budget');
-    });
-  }
-
   QueryBuilder<TransactionCategory, TransactionCategory, QDistinct>
       distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
@@ -1003,6 +996,13 @@ extension TransactionCategoryQueryWhereDistinct
       return query.addDistinctBy(r'label', caseSensitive: caseSensitive);
     });
   }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QDistinct>
+      distinctByLimit() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'limit');
+    });
+  }
 }
 
 extension TransactionCategoryQueryProperty
@@ -1010,12 +1010,6 @@ extension TransactionCategoryQueryProperty
   QueryBuilder<TransactionCategory, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<TransactionCategory, double, QQueryOperations> budgetProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'budget');
     });
   }
 
@@ -1042,6 +1036,12 @@ extension TransactionCategoryQueryProperty
   QueryBuilder<TransactionCategory, String, QQueryOperations> labelProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'label');
+    });
+  }
+
+  QueryBuilder<TransactionCategory, double, QQueryOperations> limitProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'limit');
     });
   }
 }
