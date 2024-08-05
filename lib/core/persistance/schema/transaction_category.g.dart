@@ -50,7 +50,14 @@ const TransactionCategorySchema = CollectionSchema(
   deserializeProp: _transactionCategoryDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'children': LinkSchema(
+      id: -8097825694805851084,
+      name: r'children',
+      target: r'TransactionCategory',
+      single: false,
+    )
+  },
   embeddedSchemas: {},
   getId: _transactionCategoryGetId,
   getLinks: _transactionCategoryGetLinks,
@@ -126,11 +133,14 @@ Id _transactionCategoryGetId(TransactionCategory object) {
 
 List<IsarLinkBase<dynamic>> _transactionCategoryGetLinks(
     TransactionCategory object) {
-  return [];
+  return [object.children];
 }
 
 void _transactionCategoryAttach(
-    IsarCollection<dynamic> col, Id id, TransactionCategory object) {}
+    IsarCollection<dynamic> col, Id id, TransactionCategory object) {
+  object.children
+      .attach(col, col.isar.collection<TransactionCategory>(), r'children', id);
+}
 
 extension TransactionCategoryQueryWhereSort
     on QueryBuilder<TransactionCategory, TransactionCategory, QWhere> {
@@ -805,7 +815,68 @@ extension TransactionCategoryQueryObject on QueryBuilder<TransactionCategory,
     TransactionCategory, QFilterCondition> {}
 
 extension TransactionCategoryQueryLinks on QueryBuilder<TransactionCategory,
-    TransactionCategory, QFilterCondition> {}
+    TransactionCategory, QFilterCondition> {
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      children(FilterQuery<TransactionCategory> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'children');
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      childrenLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      childrenIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      childrenIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      childrenLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      childrenLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'children', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<TransactionCategory, TransactionCategory, QAfterFilterCondition>
+      childrenLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'children', lower, includeLower, upper, includeUpper);
+    });
+  }
+}
 
 extension TransactionCategoryQuerySortBy
     on QueryBuilder<TransactionCategory, TransactionCategory, QSortBy> {

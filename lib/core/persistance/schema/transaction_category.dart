@@ -13,10 +13,14 @@ class TransactionCategory extends Model {
 
   final double limit;
 
+  final IsarLinks<TransactionCategory> children;
+
   TransactionCategory({
     this.label = "",
     this.description = "",
     this.icon = "💰",
     this.limit = 0,
-  }) : super();
+    List<TransactionCategory> children = const [],
+  })  : children = IsarLinks()..addAll(children),
+        super();
 }
