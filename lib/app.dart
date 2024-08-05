@@ -17,7 +17,7 @@ class MonBleApp extends StatelessWidget {
           centerTitle: true,
         ),
         scaffoldBackgroundColor: AppColors.bodyBackgroundColor,
-        fontFamily: 'Inter',
+        fontFamily: AppConstants.appFontFamily,
       ),
     );
   }
