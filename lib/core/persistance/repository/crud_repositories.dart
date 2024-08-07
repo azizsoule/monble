@@ -1,6 +1,8 @@
 import 'package:monble/core/persistance/repository/base/repository.dart';
 import 'package:monble/core/persistance/schema/schema.dart';
 
+typedef BudgetRepository = CrudRepository<Budget>;
+
 typedef TransactionRepository = CrudRepository<Transaction>;
 
 typedef TransactionCategoryRepository = CrudRepository<TransactionCategory>;

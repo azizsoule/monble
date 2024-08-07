@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monble/app.dart';
 import 'package:monble/injection_container.dart';
 
@@ -11,5 +12,9 @@ void main() async {
   setupInjectionContainer();
 
   // Run the app
-  runApp(const MonBleApp());
+  runApp(
+    const ProviderScope(
+      child: MonBleApp(),
+    ),
+  );
 }
